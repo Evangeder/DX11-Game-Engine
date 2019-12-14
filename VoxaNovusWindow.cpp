@@ -1,4 +1,5 @@
 #include "VoxaNovusWindow.h"
+#include "resource.h"
 #include <sstream>
 
 // Window class
@@ -13,11 +14,11 @@ Window::WindowClass::WindowClass() noexcept : hInst(GetModuleHandle(nullptr)) {
 	WindowClass.hInstance = GetInstance();
 	WindowClass.hIcon = nullptr;
 	WindowClass.hCursor = nullptr;
-	WindowClass.hIcon = nullptr;
+	WindowClass.hIcon = static_cast<HICON>(LoadImage(hInst, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 32,32,0));
 	WindowClass.hbrBackground = nullptr;
 	WindowClass.lpszMenuName = nullptr;
 	WindowClass.lpszClassName = GetName();
-	WindowClass.hIconSm = nullptr;
+	WindowClass.hIconSm = static_cast<HICON>(LoadImage(hInst, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 16, 16, 0));;
 	RegisterClassEx(&WindowClass);
 }
 Window::WindowClass::~WindowClass() {
@@ -32,8 +33,7 @@ HINSTANCE Window::WindowClass::GetInstance() noexcept {
 	return wndClass.hInst;
 }
 
-Window::Window(int width, int height, const char* name) 
-	: width(width), height(height) {
+Window::Window(int width, int height, const char* name) : width(width), height(height) {
 	// calc the windowsize
 	RECT WindowRectangle;
 	WindowRectangle.left = 100;
@@ -41,7 +41,9 @@ Window::Window(int width, int height, const char* name)
 	WindowRectangle.top = 100;
 	WindowRectangle.bottom = height + WindowRectangle.top;
 
-	AdjustWindowRect(&WindowRectangle, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, FALSE);
+	if (AdjustWindowRect(&WindowRectangle, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, FALSE) == 0)
+		throw VNWND_LAST_EXCEPT();
+	
 	hWnd = CreateWindow(
 		WindowClass::GetName(),
 		name,
@@ -55,11 +57,20 @@ Window::Window(int width, int height, const char* name)
 		WindowClass::GetInstance(),
 		this
 	);
+
+	if (hWnd == nullptr)
+		throw VNWND_LAST_EXCEPT();
+
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
 }
 
 Window::~Window() {
 	DestroyWindow(hWnd);
+}
+
+void Window::SetTitle(const std::string& title) noexcept {
+	if (SetWindowText(hWnd, title.c_str()) == 0)
+		throw VNWND_LAST_EXCEPT();
 }
 
 LRESULT WINAPI Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept {
@@ -79,11 +90,90 @@ LRESULT WINAPI Window::HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM
 }
 
 LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept {
+	POINTS pt;
+
 	switch (msg) {
 	case WM_CLOSE:
 		PostQuitMessage(0);
 		return 0;
+
+	case WM_KILLFOCUS:
+		keyboard.ClearState();
+		break;
+
+	case WM_SYSKEYDOWN:
+	case WM_KEYDOWN:
+		if (!(lParam & 0x40000000) || keyboard.AutorepeatIsEnabled())
+			keyboard.OnKeyPressed(static_cast<unsigned char>(wParam));
+		break;
+
+	case WM_SYSKEYUP:
+	case WM_KEYUP:
+		keyboard.OnKeyReleased(static_cast<unsigned char>(wParam));
+		break;
+
+	case WM_CHAR:
+		keyboard.OnChar(static_cast<unsigned char>(wParam));
+		break;
+
+	case WM_MOUSEMOVE:
+		pt = MAKEPOINTS(lParam);
+		if (pt.x >= 0 && pt.x < width && pt.y >= 0 && pt.y < height) {
+			mouse.OnMouseMove(pt.x, pt.y);
+			if (!mouse.IsInWindow()) {
+				SetCapture(hWnd);
+				mouse.OnMouseEnter();
+			}
+		}
+		else {
+			if (wParam & (MK_LBUTTON | MK_RBUTTON | MK_MBUTTON))
+				mouse.OnMouseMove(pt.x, pt.y);
+			else {
+				ReleaseCapture();
+				mouse.OnMouseLeave();
+			}
+		}
+		break;
+
+	case WM_LBUTTONDOWN:
+		pt = MAKEPOINTS(lParam);
+		mouse.OnLeftPressed(pt.x, pt.y);
+		break;
+
+	case WM_LBUTTONUP:
+		pt = MAKEPOINTS(lParam);
+		mouse.OnLeftReleased(pt.x, pt.y);
+		break;
+
+	case WM_RBUTTONDOWN:
+		pt = MAKEPOINTS(lParam);
+		mouse.OnRightPressed(pt.x, pt.y);
+		break;
+
+	case WM_RBUTTONUP:
+		pt = MAKEPOINTS(lParam);
+		mouse.OnRightReleased(pt.x, pt.y);
+		break;
+
+	case WM_MBUTTONDOWN:
+		pt = MAKEPOINTS(lParam);
+		mouse.OnWheelPressed(pt.x, pt.y);
+		break;
+
+	case WM_MBUTTONUP:
+		pt = MAKEPOINTS(lParam);
+		mouse.OnWheelReleased(pt.x, pt.y);
+		break;
+
+	case WM_MOUSEWHEEL:
+		pt = MAKEPOINTS(lParam);
+		if (GET_KEYSTATE_WPARAM(wParam))
+		if (GET_WHEEL_DELTA_WPARAM(wParam) > 0)
+			mouse.OnWheelDown(pt.x, pt.y);
+		else
+			mouse.OnWheelDown(pt.x, pt.y);
 	}
+
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
@@ -127,3 +217,4 @@ HRESULT Window::Exception::GetErrorCode() const noexcept {
 std::string Window::Exception::GetErrorString() const noexcept {
 	return TranslateErrorCode(hr);
 }
+

@@ -147,12 +147,23 @@
   <ItemGroup>
     <ClCompile Include="VoxaNovus.cpp" />
     <ClCompile Include="VoxaNovusException.cpp" />
+    <ClCompile Include="VoxaNovusKeyboard.cpp" />
+    <ClCompile Include="VoxaNovusMouse.cpp" />
     <ClCompile Include="VoxaNovusWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="VoxaNovusException.h" />
+    <ClInclude Include="VoxaNovusKeyboard.h" />
+    <ClInclude Include="VoxaNovusMouse.h" />
     <ClInclude Include="VoxaNovusWindow.h" />
     <ClInclude Include="WindowFramework.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Voxa Novus.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

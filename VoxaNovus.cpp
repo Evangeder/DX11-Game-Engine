@@ -1,4 +1,5 @@
 #include "VoxaNovusWindow.h"
+#include <sstream>
 
 int CALLBACK WinMain(
 	_In_ HINSTANCE hInstance,
@@ -25,10 +26,10 @@ int CALLBACK WinMain(
 		MessageBox(nullptr, e.what(), "VoxaNovus has crashed", MB_OK | MB_ICONEXCLAMATION);
 	}
 	catch (const std::exception & e) {
-		MessageBox(nullptr, e.what(), "Standard Exception", MB_OK | MB_ICONEXCLAMATION);
+		MessageBox(nullptr, e.what(), "VoxaNovus has crashed", MB_OK | MB_ICONEXCLAMATION);
 	}
 	catch (...) {
-		MessageBox(nullptr, "No details available", "Unknown Exception", MB_OK | MB_ICONEXCLAMATION);
+		MessageBox(nullptr, "No details available", "VoxaNovus has crashed", MB_OK | MB_ICONEXCLAMATION);
 	}
 	return -1;
 }

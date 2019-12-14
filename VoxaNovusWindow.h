@@ -1,6 +1,8 @@
 #pragma once
 #include "WindowFramework.h"
 #include "VoxaNovusException.h"
+#include "VoxaNovusKeyboard.h"
+#include "VoxaNovusMouse.h"
 
 class Window {
 public:
@@ -35,10 +37,14 @@ public:
 	~Window();
 	Window(const Window&) = delete;
 	Window& operator = (const Window&) = delete;
+	void SetTitle(const std::string& title) noexcept;
 private:
 	static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 	static LRESULT CALLBACK HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 	LRESULT HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
+public:
+	Keyboard keyboard;
+	Mouse mouse;
 private:
 	int width;
 	int height;
@@ -47,3 +53,4 @@ private:
 
 // error exec helper macro
 #define VNWND_EXCEPT(hr) Window::Exception(__LINE__,__FILE__,hr)
+#define VNWND_LAST_EXCEPT() Window::Exception(__LINE__,__FILE__,GetLastError())
