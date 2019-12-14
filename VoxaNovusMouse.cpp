@@ -1,4 +1,5 @@
 #include "VoxaNovusMouse.h"
+#include "WindowFramework.h"
 
 std::pair<int, int> Mouse::GetPos() const noexcept {
 	return {x, y};
@@ -109,4 +110,16 @@ void Mouse::OnWheelDown(int x, int y) noexcept {
 void Mouse::TrimBuffer() noexcept {
 	while (buffer.size() > bufferSize)
 		buffer.pop();
+}
+
+void Mouse::OnWheelDelta(int x, int y, int delta) {
+	wheelDeltaCarry += delta;
+	while (wheelDeltaCarry >= WHEEL_DELTA) {
+		wheelDeltaCarry -= WHEEL_DELTA;
+		OnWheelUp(x, y);
+	}
+	while (wheelDeltaCarry <= WHEEL_DELTA) {
+		wheelDeltaCarry += WHEEL_DELTA;
+		OnWheelDown(x, y);
+	}
 }
