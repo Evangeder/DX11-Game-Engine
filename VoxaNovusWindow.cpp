@@ -62,10 +62,30 @@ Window::Window(int width, int height, const char* name) : width(width), height(h
 		throw VNWND_LAST_EXCEPT();
 
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
+	pGfx = std::make_unique<Graphics>(hWnd);
 }
 
 Window::~Window() {
 	DestroyWindow(hWnd);
+}
+
+std::optional<int> Window::ProcessMessages() {
+	MSG msg;
+	while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+		if (msg.message == WM_QUIT)
+			return (int)msg.wParam;
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+	return {};
+}
+
+Graphics& Window::Gfx()
+{
+	if (!pGfx)
+		throw VNWND_NOGFX_EXCEPT();
+
+	return *pGfx;
 }
 
 void Window::SetTitle(const std::string& title) noexcept {
@@ -215,3 +235,7 @@ std::string Window::Exception::GetErrorString() const noexcept {
 	return TranslateErrorCode(hr);
 }
 
+const char* Window::NoGfxException::GetType() const noexcept
+{
+	return "VoxaNovus Crashed - No Graphics Card";
+}

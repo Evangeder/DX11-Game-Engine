@@ -3,6 +3,10 @@
 #include "VoxaNovusException.h"
 #include "VoxaNovusKeyboard.h"
 #include "VoxaNovusMouse.h"
+#include "VoxaNovusGraphics.h"
+#include "VoxaNovusWndExceptionMacros.h"
+#include <optional>
+#include <memory>
 
 class Window {
 public:
@@ -17,6 +21,11 @@ public:
 	private:
 		HRESULT hr;
 	};
+	class NoGfxException : public Exception {
+	public:
+		using Exception::Exception;
+		const char* GetType() const noexcept override;
+	};
 private:
 	// singleton manages registration/cleanup of window class
 	class WindowClass {
@@ -28,7 +37,7 @@ private:
 		~WindowClass();
 		WindowClass(const WindowClass&) = delete;
 		WindowClass& operator = (const WindowClass&) = delete;
-		static constexpr const char* wndClassName = "Voxa Novus DX11";
+		static constexpr const char* wndClassName = "VoxaNovus DX11";
 		static WindowClass wndClass;
 		HINSTANCE hInst;
 	};
@@ -38,6 +47,8 @@ public:
 	Window(const Window&) = delete;
 	Window& operator = (const Window&) = delete;
 	void SetTitle(const std::string& title) noexcept;
+	static std::optional<int> ProcessMessages();
+	Graphics& Gfx();
 private:
 	static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 	static LRESULT CALLBACK HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
@@ -49,8 +60,5 @@ private:
 	int width;
 	int height;
 	HWND hWnd;
+	std::unique_ptr<Graphics> pGfx;
 };
-
-// error exec helper macro
-#define VNWND_EXCEPT(hr) Window::Exception(__LINE__,__FILE__,hr)
-#define VNWND_LAST_EXCEPT() Window::Exception(__LINE__,__FILE__,GetLastError())
