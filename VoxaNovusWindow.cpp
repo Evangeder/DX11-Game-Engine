@@ -1,5 +1,6 @@
 #include "VoxaNovusWindow.h"
 #include "resource.h"
+#include "imgui/imgui_impl_win32.h"
 #include <sstream>
 
 // Window class
@@ -62,10 +63,14 @@ Window::Window(int width, int height, const char* name) : width(width), height(h
 		throw VNWND_LAST_EXCEPT();
 
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
+
+	ImGui_ImplWin32_Init(hWnd);
+
 	pGfx = std::make_unique<Graphics>(hWnd);
 }
 
 Window::~Window() {
+	ImGui_ImplWin32_Shutdown();
 	DestroyWindow(hWnd);
 }
 
@@ -110,6 +115,12 @@ LRESULT WINAPI Window::HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM
 }
 
 LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept {
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
+	{
+		return true;
+	}
+	const auto imio = ImGui::GetIO();
+	
 	POINTS pt;
 
 	switch (msg) {
@@ -123,20 +134,24 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 
 	case WM_SYSKEYDOWN:
 	case WM_KEYDOWN:
+		if (imio.WantCaptureKeyboard) break;
 		if (!(lParam & 0x40000000) || keyboard.AutorepeatIsEnabled())
 			keyboard.OnKeyPressed(static_cast<unsigned char>(wParam));
 		break;
 
 	case WM_SYSKEYUP:
 	case WM_KEYUP:
+		if (imio.WantCaptureKeyboard) break;
 		keyboard.OnKeyReleased(static_cast<unsigned char>(wParam));
 		break;
 
 	case WM_CHAR:
+		if (imio.WantCaptureKeyboard) break;
 		keyboard.OnChar(static_cast<unsigned char>(wParam));
 		break;
 
 	case WM_MOUSEMOVE:
+		if (imio.WantCaptureMouse) break;
 		pt = MAKEPOINTS(lParam);
 		if (pt.x >= 0 && pt.x < width && pt.y >= 0 && pt.y < height) {
 			mouse.OnMouseMove(pt.x, pt.y);
@@ -156,36 +171,43 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 		break;
 
 	case WM_LBUTTONDOWN:
+		if (imio.WantCaptureMouse) break;
 		pt = MAKEPOINTS(lParam);
 		mouse.OnLeftPressed(pt.x, pt.y);
 		break;
 
 	case WM_LBUTTONUP:
+		if (imio.WantCaptureMouse) break;
 		pt = MAKEPOINTS(lParam);
 		mouse.OnLeftReleased(pt.x, pt.y);
 		break;
 
 	case WM_RBUTTONDOWN:
+		if (imio.WantCaptureMouse) break;
 		pt = MAKEPOINTS(lParam);
 		mouse.OnRightPressed(pt.x, pt.y);
 		break;
 
 	case WM_RBUTTONUP:
+		if (imio.WantCaptureMouse) break;
 		pt = MAKEPOINTS(lParam);
 		mouse.OnRightReleased(pt.x, pt.y);
 		break;
 
 	case WM_MBUTTONDOWN:
+		if (imio.WantCaptureMouse) break;
 		pt = MAKEPOINTS(lParam);
 		mouse.OnWheelPressed(pt.x, pt.y);
 		break;
 
 	case WM_MBUTTONUP:
+		if (imio.WantCaptureMouse) break;
 		pt = MAKEPOINTS(lParam);
 		mouse.OnWheelReleased(pt.x, pt.y);
 		break;
 
 	case WM_MOUSEWHEEL:
+		if (imio.WantCaptureMouse) break;
 		pt = MAKEPOINTS(lParam);
 		const int delta = GET_WHEEL_DELTA_WPARAM(wParam);
 		mouse.OnWheelDelta(pt.x, pt.y, delta);

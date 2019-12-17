@@ -5,8 +5,13 @@
 #include <d3d11.h>
 #include <wrl.h>
 #include "DxgiInfoManager.h"
+#include <d3dcompiler.h>
+#include <DirectXMath.h>
+#include <memory>
+#include <random>
 
 class Graphics {
+	friend class Bindable;
 public:
 	class Exception : public VoxaNovusException {
 		using VoxaNovusException::VoxaNovusException;
@@ -44,11 +49,18 @@ public:
 	Graphics(const Graphics&) = delete;
 	Graphics& operator = (const Graphics&) = delete;
 	~Graphics() = default;
-	void ClearBufferHex(int r, int g, int b) noexcept;
+	void BeginFrameHex(int r, int g, int b) noexcept;
 	void EndFrame();
-	void ClearBuffer(float r, float g, float b) noexcept;
-	void DrawTestTriangle(float angle, float x, float y);
+	void BeginFrame(float r, float g, float b) noexcept;
+	void DrawIndexed(UINT count);
+	void SetProjection(DirectX::FXMMATRIX proj) noexcept;
+	DirectX::XMMATRIX GetProjection() const noexcept;
+	void EnableImgui() noexcept;
+	void DisableImgui() noexcept;
+	bool IsImguiEnabled() const noexcept;
 private:
+	bool imguiEnabled = true;
+	DirectX::XMMATRIX projection;
 #ifndef NDEBUG
 	DxgiInfoManager infoManager;
 #endif

@@ -147,26 +147,87 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="DxgiInfoManager.cpp" />
+    <ClCompile Include="ImguiManager.cpp" />
+    <ClCompile Include="imgui\imgui.cpp" />
+    <ClCompile Include="imgui\imgui_demo.cpp" />
+    <ClCompile Include="imgui\imgui_draw.cpp" />
+    <ClCompile Include="imgui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Melon.cpp" />
+    <ClCompile Include="Pyramid.cpp" />
     <ClCompile Include="VoxaNovus.cpp" />
+    <ClCompile Include="VoxaNovusBindable.cpp" />
+    <ClCompile Include="VoxaNovusBox.cpp" />
     <ClCompile Include="VoxaNovusClock.cpp" />
+    <ClCompile Include="VoxaNovusDrawable.cpp" />
     <ClCompile Include="VoxaNovusException.cpp" />
+    <ClCompile Include="VoxaNovusGDIPlusManager.cpp" />
     <ClCompile Include="VoxaNovusGraphics.cpp" />
+    <ClCompile Include="VoxaNovusIndexBuffer.cpp" />
+    <ClCompile Include="VoxaNovusInputLayout.cpp" />
     <ClCompile Include="VoxaNovusKeyboard.cpp" />
     <ClCompile Include="VoxaNovusMouse.cpp" />
+    <ClCompile Include="VoxaNovusPixelShader.cpp" />
+    <ClCompile Include="VoxaNovusSampler.cpp" />
+    <ClCompile Include="VoxaNovusSheet.cpp" />
+    <ClCompile Include="VoxaNovusSurface.cpp" />
+    <ClCompile Include="VoxaNovusTexture.cpp" />
+    <ClCompile Include="VoxaNovusTopology.cpp" />
+    <ClCompile Include="VoxaNovusTransformCBuf.cpp" />
+    <ClCompile Include="VoxaNovusVertexBuffer.cpp" />
+    <ClCompile Include="VoxaNovusVertexShader.cpp" />
     <ClCompile Include="VoxaNovusWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Cone.h" />
+    <ClInclude Include="Cube.h" />
     <ClInclude Include="DxgiInfoManager.h" />
+    <ClInclude Include="ImguiManager.h" />
+    <ClInclude Include="imgui\imconfig.h" />
+    <ClInclude Include="imgui\imgui.h" />
+    <ClInclude Include="imgui\imgui_impl_dx11.h" />
+    <ClInclude Include="imgui\imgui_impl_win32.h" />
+    <ClInclude Include="imgui\imgui_internal.h" />
+    <ClInclude Include="imgui\imstb_rectpack.h" />
+    <ClInclude Include="imgui\imstb_textedit.h" />
+    <ClInclude Include="imgui\imstb_truetype.h" />
+    <ClInclude Include="Melon.h" />
+    <ClInclude Include="Plane.h" />
+    <ClInclude Include="Prism.h" />
+    <ClInclude Include="Pyramid.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Sphere.h" />
+    <ClInclude Include="VoxaNovusBindableBase.h" />
+    <ClInclude Include="VoxaNovusBox.h" />
+    <ClInclude Include="VoxaNovusConstantBuffers.h" />
+    <ClInclude Include="VoxaNovusDrawable.h" />
+    <ClInclude Include="VoxaNovusGDIPlusManager.h" />
+    <ClInclude Include="VoxaNovusIndexBuffer.h" />
+    <ClInclude Include="VoxaNovusIndexedTriangleList.h" />
+    <ClInclude Include="VoxaNovusInputLayout.h" />
+    <ClInclude Include="VoxaNovusMath.h" />
+    <ClInclude Include="VoxaNovusPixelShader.h" />
+    <ClInclude Include="VoxaNovusSampler.h" />
+    <ClInclude Include="VoxaNovusSheet.h" />
+    <ClInclude Include="VoxaNovusSurface.h" />
+    <ClInclude Include="VoxaNovusTexture.h" />
+    <ClInclude Include="VoxaNovusTopology.h" />
+    <ClInclude Include="VoxaNovusBindable.h" />
     <ClInclude Include="VoxaNovusClock.h" />
+    <ClInclude Include="VoxaNovusConditionalNoexcept.h" />
     <ClInclude Include="VoxaNovusException.h" />
     <ClInclude Include="VoxaNovusGfxExceptionMacros.h" />
     <ClInclude Include="VoxaNovusGraphics.h" />
     <ClInclude Include="VoxaNovusKeyboard.h" />
     <ClInclude Include="VoxaNovusMouse.h" />
+    <ClInclude Include="VoxaNovusTransformCBuf.h" />
+    <ClInclude Include="VoxaNovusVertexBuffer.h" />
+    <ClInclude Include="VoxaNovusVertexShader.h" />
     <ClInclude Include="VoxaNovusWindow.h" />
     <ClInclude Include="VoxaNovusWndExceptionMacros.h" />
+    <ClInclude Include="VoxaNovuxDrawableBase.h" />
     <ClInclude Include="WindowFramework.h" />
   </ItemGroup>
   <ItemGroup>
@@ -176,7 +237,27 @@
     <Image Include="icon1.ico" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="TriangleTestPixelShader.hlsl">
+    <FxCompile Include="ColorBlendPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="ColorBlendVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="ColorIndexPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
@@ -190,7 +271,7 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="TriangleTestShader.hlsl">
+    <FxCompile Include="ColorIndexVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
@@ -203,6 +284,26 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="TexturePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="TextureVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
