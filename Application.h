@@ -2,6 +2,7 @@
 #include "VoxaNovusWindow.h"
 #include "VoxaNovusClock.h"
 #include "ImguiManager.h"
+#include "VoxaNovusCamera.h"
 
 class Application {
 public:
@@ -17,6 +18,7 @@ private:
 	std::vector<std::unique_ptr<class Drawable>> drawables;
 	static constexpr size_t nDrawables = 180;
 	float SimulationSpeed = 1.0f;
+	Camera cam;
 	std::vector<float> FPS_History;
 	bool ShowDebugWindows = true;
 	float FPS_Max = 0.0f;

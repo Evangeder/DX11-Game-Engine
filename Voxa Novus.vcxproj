@@ -158,7 +158,8 @@
     <ClCompile Include="Pyramid.cpp" />
     <ClCompile Include="VoxaNovus.cpp" />
     <ClCompile Include="VoxaNovusBindable.cpp" />
-    <ClCompile Include="VoxaNovusBox.cpp" />
+    <ClCompile Include="Box.cpp" />
+    <ClCompile Include="VoxaNovusCamera.cpp" />
     <ClCompile Include="VoxaNovusClock.cpp" />
     <ClCompile Include="VoxaNovusDrawable.cpp" />
     <ClCompile Include="VoxaNovusException.cpp" />
@@ -170,7 +171,7 @@
     <ClCompile Include="VoxaNovusMouse.cpp" />
     <ClCompile Include="VoxaNovusPixelShader.cpp" />
     <ClCompile Include="VoxaNovusSampler.cpp" />
-    <ClCompile Include="VoxaNovusSheet.cpp" />
+    <ClCompile Include="Sheet.cpp" />
     <ClCompile Include="VoxaNovusSurface.cpp" />
     <ClCompile Include="VoxaNovusTexture.cpp" />
     <ClCompile Include="VoxaNovusTopology.cpp" />
@@ -181,6 +182,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="VoxaNovusCamera.h" />
     <ClInclude Include="Cone.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="DxgiInfoManager.h" />
@@ -200,7 +202,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="VoxaNovusBindableBase.h" />
-    <ClInclude Include="VoxaNovusBox.h" />
+    <ClInclude Include="Box.h" />
     <ClInclude Include="VoxaNovusConstantBuffers.h" />
     <ClInclude Include="VoxaNovusDrawable.h" />
     <ClInclude Include="VoxaNovusGDIPlusManager.h" />
@@ -210,7 +212,7 @@
     <ClInclude Include="VoxaNovusMath.h" />
     <ClInclude Include="VoxaNovusPixelShader.h" />
     <ClInclude Include="VoxaNovusSampler.h" />
-    <ClInclude Include="VoxaNovusSheet.h" />
+    <ClInclude Include="Sheet.h" />
     <ClInclude Include="VoxaNovusSurface.h" />
     <ClInclude Include="VoxaNovusTexture.h" />
     <ClInclude Include="VoxaNovusTopology.h" />

@@ -75,9 +75,6 @@
     <ClCompile Include="VoxaNovusBindable.cpp">
       <Filter>Source Files\Bindable</Filter>
     </ClCompile>
-    <ClCompile Include="VoxaNovusBox.cpp">
-      <Filter>Source Files\Drawable</Filter>
-    </ClCompile>
     <ClCompile Include="VoxaNovusDrawable.cpp">
       <Filter>Source Files\Drawable</Filter>
     </ClCompile>
@@ -114,9 +111,6 @@
     <ClCompile Include="VoxaNovusSampler.cpp">
       <Filter>Source Files\Bindable</Filter>
     </ClCompile>
-    <ClCompile Include="VoxaNovusSheet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="VoxaNovusTexture.cpp">
       <Filter>Source Files\Bindable</Filter>
     </ClCompile>
@@ -140,6 +134,15 @@
     </ClCompile>
     <ClCompile Include="ImguiManager.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sheet.cpp">
+      <Filter>Source Files\GeomPrimitives</Filter>
+    </ClCompile>
+    <ClCompile Include="VoxaNovusCamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>Source Files\GeomPrimitives</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -196,9 +199,6 @@
     </ClInclude>
     <ClInclude Include="VoxaNovusIndexBuffer.h">
       <Filter>Header Files\Bindable</Filter>
-    </ClInclude>
-    <ClInclude Include="VoxaNovusBox.h">
-      <Filter>Header Files\Drawable</Filter>
     </ClInclude>
     <ClInclude Include="VoxaNovusVertexBuffer.h">
       <Filter>Header Files\Bindable</Filter>
@@ -257,9 +257,6 @@
     <ClInclude Include="VoxaNovusSampler.h">
       <Filter>Header Files\Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="VoxaNovusSheet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="VoxaNovusTexture.h">
       <Filter>Header Files\Bindable</Filter>
     </ClInclude>
@@ -289,6 +286,15 @@
     </ClInclude>
     <ClInclude Include="ImguiManager.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sheet.h">
+      <Filter>Header Files\GeomPrimitives</Filter>
+    </ClInclude>
+    <ClInclude Include="VoxaNovusCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Header Files\GeomPrimitives</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

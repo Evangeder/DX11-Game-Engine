@@ -1,11 +1,11 @@
 #include "Application.h"
-#include "VoxaNovusBox.h"
 #include "VoxaNovusMath.h"
-#include "Pyramid.h"
-#include "Melon.h"
 #include "VoxaNovusSurface.h"
 #include "VoxaNovusGDIPlusManager.h"
-#include "VoxaNovusSheet.h"
+#include "Box.h"
+#include "Pyramid.h"
+#include "Melon.h"
+#include "Sheet.h"
 #include "imgui/imgui.h"
 #include <iostream>
 #include <iomanip>
@@ -14,6 +14,8 @@
 #include <sstream>
 #include <algorithm>
 #include <memory>
+
+namespace dx = DirectX;
 
 GDIPlusManager gdipm;
 
@@ -67,7 +69,7 @@ Application::Application() : wnd(800, 600, "VoxaNovus DX11") {
 	drawables.reserve(nDrawables);
 	std::generate_n(std::back_inserter(drawables), nDrawables, f);
 
-	wnd.Gfx().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
+	wnd.Gfx().SetProjection(dx::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
 }
 
 int Application::Go() {
@@ -83,6 +85,7 @@ Application::~Application() {}
 void Application::DoFrame() {
 	const auto dt = timer.Mark() * SimulationSpeed;
 	wnd.Gfx().BeginFrameHex(0x10, 0x10, 0x10);
+	wnd.Gfx().SetCamera(cam.GetMatrix());
 	//wnd.Gfx().ClearBufferHex(0x64, 0x95, 0xED);
 	for (auto& b : drawables)
 	{
@@ -102,8 +105,6 @@ void Application::DoFrame() {
 
 	float d = FPS_Max - FPS_Min;
 	if (d > 0.3f) d = 0.3f;
-
-	ImGui::ShowDemoWindow();
 
 	FPS_CurrentScale = FPS_Max * (1.0f + d/10.0f);
 	FPS_CurrentScaleMin = FPS_Min * (1.0f - d/10.0f);
@@ -127,5 +128,8 @@ void Application::DoFrame() {
 		}
 		ImGui::End();
 	}
+
+	cam.SpawnControlWindow();
+
 	wnd.Gfx().EndFrame();
 }
