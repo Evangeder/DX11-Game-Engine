@@ -19,7 +19,7 @@ namespace dx = DirectX;
 
 GDIPlusManager gdipm;
 
-Application::Application() : wnd(800, 600, "VoxaNovus DX11") {
+Application::Application() : wnd(1024, 768, "VoxaNovus DX11") {
 	class Factory {
 	public:
 		Factory(Graphics& gfx) : gfx(gfx) { }
@@ -69,7 +69,7 @@ Application::Application() : wnd(800, 600, "VoxaNovus DX11") {
 	drawables.reserve(nDrawables);
 	std::generate_n(std::back_inserter(drawables), nDrawables, f);
 
-	wnd.Gfx().SetProjection(dx::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
+	wnd.Gfx().SetProjection(dx::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 400.0f));
 }
 
 int Application::Go() {

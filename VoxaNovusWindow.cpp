@@ -119,7 +119,7 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 	{
 		return true;
 	}
-	const auto imio = ImGui::GetIO();
+	const auto& imio = ImGui::GetIO();
 	
 	POINTS pt;
 

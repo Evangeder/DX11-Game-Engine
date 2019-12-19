@@ -48,7 +48,7 @@ public:
 	Graphics(HWND hWnd);
 	Graphics(const Graphics&) = delete;
 	Graphics& operator = (const Graphics&) = delete;
-	~Graphics() = default;
+	~Graphics();
 	void BeginFrameHex(int r, int g, int b) noexcept;
 	void EndFrame();
 	void BeginFrame(float r, float g, float b) noexcept;
