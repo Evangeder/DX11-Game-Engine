@@ -3,6 +3,7 @@
 #include "VoxaNovusClock.h"
 #include "ImguiManager.h"
 #include "VoxaNovusCamera.h"
+#include "VoxaNovusPointLight.h"
 
 class Application {
 public:
@@ -19,6 +20,7 @@ private:
 	static constexpr size_t nDrawables = 180;
 	float SimulationSpeed = 1.0f;
 	Camera cam;
+	PointLight light;
 	std::vector<float> FPS_History;
 	bool ShowDebugWindows = true;
 	float FPS_Max = 0.0f;

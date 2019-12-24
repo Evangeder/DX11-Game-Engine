@@ -40,6 +40,18 @@
     <Filter Include="Source Files\GeomPrimitives">
       <UniqueIdentifier>{29b02936-5975-479d-954b-66f4ef42650f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\Unlit">
+      <UniqueIdentifier>{a88906a2-0c92-4e96-93be-39f44fd7b81d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Lit">
+      <UniqueIdentifier>{d89433df-627c-47fc-b910-8f2e2acabe17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Light">
+      <UniqueIdentifier>{fa7cfaeb-da0d-4551-98ee-568e0e05fbf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Light">
+      <UniqueIdentifier>{59b7dc2c-e4ef-4ac8-8de6-dcd8ec8e7ff7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="VoxaNovus.cpp">
@@ -99,9 +111,6 @@
     <ClCompile Include="Pyramid.cpp">
       <Filter>Source Files\GeomPrimitives</Filter>
     </ClCompile>
-    <ClCompile Include="Melon.cpp">
-      <Filter>Source Files\GeomPrimitives</Filter>
-    </ClCompile>
     <ClCompile Include="VoxaNovusSurface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -143,6 +152,12 @@
     </ClCompile>
     <ClCompile Include="Box.cpp">
       <Filter>Source Files\GeomPrimitives</Filter>
+    </ClCompile>
+    <ClCompile Include="SolidSphere.cpp">
+      <Filter>Source Files\GeomPrimitives</Filter>
+    </ClCompile>
+    <ClCompile Include="VoxaNovusLight.cpp">
+      <Filter>Source Files\Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -242,9 +257,6 @@
     <ClInclude Include="Prism.h">
       <Filter>Header Files\GeomPrimitives</Filter>
     </ClInclude>
-    <ClInclude Include="Melon.h">
-      <Filter>Header Files\GeomPrimitives</Filter>
-    </ClInclude>
     <ClInclude Include="Pyramid.h">
       <Filter>Header Files\GeomPrimitives</Filter>
     </ClInclude>
@@ -296,6 +308,12 @@
     <ClInclude Include="Box.h">
       <Filter>Header Files\GeomPrimitives</Filter>
     </ClInclude>
+    <ClInclude Include="VoxaNovusPointLight.h">
+      <Filter>Header Files\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="SolidSphere.h">
+      <Filter>Header Files\GeomPrimitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Voxa Novus.rc">
@@ -314,17 +332,29 @@
     <FxCompile Include="ColorBlendVS.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="ColorIndexVS.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="ColorIndexPS.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
     <FxCompile Include="TexturePS.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="TextureVS.hlsl">
       <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="ColorIndexPS.hlsl">
+      <Filter>Shaders\Unlit</Filter>
+    </FxCompile>
+    <FxCompile Include="ColorIndexVS.hlsl">
+      <Filter>Shaders\Unlit</Filter>
+    </FxCompile>
+    <FxCompile Include="PhongPS.hlsl">
+      <Filter>Shaders\Lit</Filter>
+    </FxCompile>
+    <FxCompile Include="PhongVS.hlsl">
+      <Filter>Shaders\Lit</Filter>
+    </FxCompile>
+    <FxCompile Include="SolidPS.hlsl">
+      <Filter>Shaders\Unlit</Filter>
+    </FxCompile>
+    <FxCompile Include="SolidVS.hlsl">
+      <Filter>Shaders\Unlit</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
