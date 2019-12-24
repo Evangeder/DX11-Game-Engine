@@ -87,21 +87,28 @@ void Application::DoFrame() {
 	FPS_CurrentScale = FPS_Max * (1.0f + d/10.0f);
 	FPS_CurrentScaleMin = FPS_Min * (1.0f - d/10.0f);
 
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+	ImGui::Begin("DockSpace Demo", NULL, ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoBackground);
+	ImGui::PopStyleVar();
+	ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+	ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode | ImGuiWindowFlags_NoMove);
+	ImGui::End();
+
 	if (ShowDebugWindows) {
 		char buf[128];
 #pragma warning(suppress : 4996)
 		sprintf(buf, "%.2fms (%.0f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
-		ImVec2 window_pos = ImVec2(1, 1);
-		ImVec2 window_pos_pivot = ImVec2(0.0f, 0.0f);
-		ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
-		ImGui::SetNextWindowBgAlpha(0.75f);
-		if (ImGui::Begin("Framerate", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoMouseInputs)) {
+		//ImVec2 window_pos = ImVec2(1, 1);
+		//ImVec2 window_pos_pivot = ImVec2(0.0f, 0.0f);
+		//ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
+		//ImGui::SetNextWindowBgAlpha(0.75f);
+		if (ImGui::Begin("Framerate", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoFocusOnAppearing)) {
 			ImGui::PlotHistogram("", a, FPS_Histogram_ElementCount, 0, buf, FPS_CurrentScaleMin, FPS_CurrentScale, ImVec2(150, 40));
 		}
 		ImGui::End();
 
-		if (ImGui::Begin("Simulation", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing)) {
+		if (ImGui::Begin("Simulation", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoFocusOnAppearing)) {
 			ImGui::SliderFloat("DeltaTime scale", &SimulationSpeed, 0.0f, 2.0f);
 		}
 		ImGui::End();
