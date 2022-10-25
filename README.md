@@ -1,2 +1,1 @@
-# VoxaNovus
- C++ 3D Engine for VoxKrieg
+# C++ DirectX11 Game Engine
